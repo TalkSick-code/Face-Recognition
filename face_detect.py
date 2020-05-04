@@ -29,7 +29,7 @@ while True:
             cv2.imshow("Chopped Face" , resized)
 
 
-    key = cv2.waitKey(1)
+    key = cv2.waitKey(1) & 0xFF 
 
     if key == ord("q"): # 'q' key closes the camera
         break
