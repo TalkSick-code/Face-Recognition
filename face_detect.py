@@ -14,7 +14,7 @@ while True:
     retval , image = cap.read()
 
     if retval:
-        faces = classifier.detectMultiScale(image)  #detects faces from the video
+        faces = classifier.detectMultiScale(image, 1.3, 5)  #detects faces from the video
         cv2.imshow("My Camera", image) #Opens camera and displays image read from video
 
         if len(faces) > 0:
