@@ -16,7 +16,10 @@ while True:
     retval, image = cap.read()
 
     if retval:
-        faces = classifier.detectMultiScale(image) #detects faces from the video
+        #Change the factors 1.3 and 5 in the detectMultiScale parameters so as to reduce false negatives and better detection of faces. 
+        #For minscale : 1.1-1.4 is a good range
+        #For minNeighbors, vary from 3-6
+        faces = classifier.detectMultiScale(image, 1.3, 5) #detects faces from the video
 
         if len(faces) > 0:
             sorted_faces = sorted(faces, key=lambda item: item[2]*item[3]) #sorts faces on the basis of area
