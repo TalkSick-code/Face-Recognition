@@ -22,16 +22,15 @@ while True:
             sorted_faces = sorted(faces, key=lambda item: item[2]*item[3]) #sorts faces on the basis of area
 
             x, y, w, h = sorted_faces[-1] #Largest face in frame
-
-
-            cut = image[y:y+h, x:x+w] #Chops the face out of image
-            resized = cv2.resize(cut, (100,100))
-            y_test = resized.mean(axis=2).flatten() #Face data flattened to compare with faces.npy data
-
-            name = model.predict([y_test])[0] #Predicts the face's name by K-Nearest Neighbors Classification
-
-            cv2.rectangle(image, (x, y), (x + w, y + h), color=(88, 92, 173), thickness=3) #Encloses the face in a rectangle
-            cv2.putText(image, str(name), (x, y - 10), font, fontScale=1, color=(255, 255, 255)) #Puts name of the detected face over rectangle
+            
+            for (a,b,c,d) in faces: #Iterates over all faces in the frame
+                cut = image[b:b+d, a:a+c] #Chops the face out of image
+                resized = cv2.resize(cut, (100,100))
+                y_test = resized.mean(axis=2).flatten() #Face data flattened to compare with faces.npy data
+                name = model.predict([y_test])[0] #Predicts the face's name by K-Nearest Neighbors Classification
+                
+                cv2.rectangle(image, (a, b), (a + c, b + d), color=(88, 92, 173), thickness=3) #Encloses the face in a rectangle
+                cv2.putText(image, str(name), (a, b - 10), font, fontScale=1, color=(255, 255, 255)) #Puts name of the detected face over rectangle
 
         cv2.imshow("My Camera", image) #Displays the image
 
